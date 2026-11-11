@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Layout Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Theme shared with Layer Splitter: wireframe desk on graph paper, outlined panels with sticky-note heads */
+:root{
+  --bg:#f1f1f4; --grid:#e1e1e8; --panel:#ffffff; --stroke:#18181f; --line:#dedee6;
+  --fg:#18181f; --muted:#5f5f6e; --hover:#f4f2f9;
+  --accent:#9747ff; --accent-ink:#ffffff; --accent-soft:#f0e6ff;
+  --n-blue:#a9cfe8; --n-pink:#e8b8df; --n-yellow:#f3d48c; --n-green:#c4d7a1;
+  --badge-bg:#ffffff; --badge-fg:#18181f; --chip-bg:#13233f; --chip-fg:#ffffff;
+  --warn:#8a4b00; --warn-bg:#fff2dc; --bad:#b4233a; --ok:#1d7a4f;
+  --check:#e8e8ee; --check-2:#ffffff; --alert:#f25c05; --alert-bg:#fff0e5;
+  --font-display:"Archivo","IBM Plex Sans Thai",system-ui,sans-serif;
+  --font-ui:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-data:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:12px; --sw:1.5px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1628; --grid:#16243b; --panel:#111e34; --stroke:#e6ecf6; --line:#24344f;
+  --fg:#eef2f9; --muted:#9eabc2; --hover:#18294a;
+  --accent:#b07cff; --accent-ink:#120a22; --accent-soft:#2a2150;
+  --n-blue:#284b66; --n-pink:#58324f; --n-yellow:#5a4720; --n-green:#3b4f2c;
+  --chip-bg:#e6ecf6; --chip-fg:#0c1628;
+  --warn:#f0b35a; --warn-bg:#33270f; --bad:#ff7a8e; --ok:#5fd39b;
+  --check:#1a2a44; --check-2:#132239; --alert:#ff8a3d; --alert-bg:#3a2210; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1628; --grid:#16243b; --panel:#111e34; --stroke:#e6ecf6; --line:#24344f;
+  --fg:#eef2f9; --muted:#9eabc2; --hover:#18294a;
+  --accent:#b07cff; --accent-ink:#120a22; --accent-soft:#2a2150;
+  --n-blue:#284b66; --n-pink:#58324f; --n-yellow:#5a4720; --n-green:#3b4f2c;
+  --chip-bg:#e6ecf6; --chip-fg:#0c1628;
+  --warn:#f0b35a; --warn-bg:#33270f; --bad:#ff7a8e; --ok:#5fd39b;
+  --check:#1a2a44; --check-2:#132239; --alert:#ff8a3d; --alert-bg:#3a2210; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background-color:var(--bg);color:var(--fg);font:14px/1.5 var(--font-ui);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;padding:18px 16px 28px}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+header.top{display:flex;align-items:center;gap:12px;margin:0 auto 16px;max-width:1400px}
+.logo{width:38px;height:38px;border-radius:10px;background:var(--accent);border:var(--sw) solid var(--stroke);display:grid;place-items:center;flex:none;box-shadow:3px 3px 0 var(--stroke)}
+.logo svg{width:20px;height:20px}
+header h1{font:700 21px/1.1 var(--font-display);margin:0;letter-spacing:-.01em}
+.disclaimer{flex:1;min-width:0;margin:0 0 0 8px;font-size:11.5px;line-height:1.5;color:var(--muted)}
+.quota{display:flex;align-items:center;gap:8px;border:var(--sw) solid var(--stroke);background:var(--panel);border-radius:10px;padding:6px 10px;flex:none;box-shadow:3px 3px 0 var(--stroke)}
+.quota b{font:700 18px var(--font-display);font-variant-numeric:tabular-nums}
+.quota small{color:var(--muted);font-size:11.5px;line-height:1.25}
+.quota input{width:44px;border:var(--sw) solid var(--line);border-radius:6px;padding:1px 4px;background:var(--panel);font:12px var(--font-data)}
+.quota.low{background:var(--alert-bg)} .quota.low .qcred b{color:var(--alert)}
+.quota{gap:12px}
+.qacc{display:grid;grid-template-columns:auto auto;align-items:center;column-gap:6px;row-gap:0}
+.qacc small{grid-column:1/-1}
+.qname{font:600 13px var(--font-ui);max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qacc .btn.ghost{padding:0 4px;font-size:12px}
+.qsep{width:1.5px;align-self:stretch;background:var(--line)}
+.qcred{display:grid;line-height:1.15}
+.qcred b{font:700 20px var(--font-display);font-variant-numeric:tabular-nums}
+.qtot{font:500 13px var(--font-data);color:var(--muted);margin-left:2px}
+
+.btn{border:var(--sw) solid var(--stroke);background:var(--panel);border-radius:8px;padding:7px 12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;font-weight:500}
+.btn:hover{background:var(--hover)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);font-weight:600;box-shadow:3px 3px 0 var(--stroke);transition:transform .08s,box-shadow .08s}
+.btn.primary:active:not(:disabled){transform:translate(2px,2px);box-shadow:1px 1px 0 var(--stroke)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.btn.block{width:100%;padding:11px 12px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--accent);padding:3px 6px;font-size:12.5px}
+.btn.ghost:hover{background:var(--accent-soft)}
+.btn.small{padding:3px 9px;font-size:12px}
+.btn.icon{width:30px;height:30px;padding:0;flex:none}
+.btn.icon svg{width:15px;height:15px}
+.btn.on{background:var(--accent);color:var(--accent-ink)}
+
+.app{max-width:1400px;margin:0 auto;display:grid;gap:16px;grid-template-columns:330px minmax(0,1fr);align-items:start}
+.col{display:grid;gap:16px;min-width:0}
+@media (max-width:980px){.app{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--panel);border:var(--sw) solid var(--stroke);border-radius:var(--r);min-width:0;overflow:hidden}
+.panel h2{font:600 15px/1.2 var(--font-display);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.phead{display:flex;align-items:center;gap:8px;padding:10px;border-bottom:var(--sw) solid var(--stroke);min-height:52px}
+.phead .count{margin-left:auto;white-space:nowrap;opacity:.7;font:12px var(--font-data)}
+.n-blue .phead{background:var(--n-blue)} .n-pink .phead{background:var(--n-pink)} .n-yellow .phead{background:var(--n-yellow)} .n-green .phead{background:var(--n-green)}
+.step{display:grid;place-items:center;min-width:32px;height:32px;padding:0 5px;border-radius:5px;background:var(--badge-bg);color:var(--badge-fg);border:var(--sw) solid var(--stroke);font:700 14px var(--font-display);flex:none}
+.pbody{padding:14px;display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+.pbody>*{min-width:0}
+.hint{color:var(--muted);font-size:12px;line-height:1.5}
+.status{font-size:12.5px;color:var(--muted)} .status.bad{color:var(--bad)} .status.ok{color:var(--ok)} .status:empty{display:none}
+.ratio{font:500 10.5px var(--font-data);background:var(--chip-bg);color:var(--chip-fg);border-radius:4px;padding:2px 6px;white-space:nowrap;flex:none}
+.checker{background-color:var(--check-2);background-image:linear-gradient(45deg,var(--check) 25%,transparent 25%),linear-gradient(-45deg,var(--check) 25%,transparent 25%),linear-gradient(45deg,transparent 75%,var(--check) 75%),linear-gradient(-45deg,transparent 75%,var(--check) 75%);background-size:12px 12px;background-position:0 0,0 6px,6px -6px,-6px 0}
+
+.drop{border:var(--sw) dashed var(--stroke);border-radius:10px;padding:20px 14px 16px;text-align:center;display:grid;gap:9px;justify-items:center;transition:background .15s;cursor:pointer}
+.drop.over{background:var(--accent-soft)}
+.drop svg{width:32px;height:32px}
+.drop small{color:var(--muted);font-size:12px;line-height:1.5}
+.master{display:grid;gap:8px}
+.master img{display:block;max-width:100%;max-height:200px;margin:0 auto;border:var(--sw) solid var(--stroke)}
+.minfo{display:flex;align-items:center;gap:8px;min-width:0}
+.minfo .name{flex:1;min-width:0;font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.minfo .dim{font:11.5px var(--font-data);color:var(--muted)}
+
+.szrow{display:flex;align-items:center;gap:8px;padding:6px 6px;border-radius:7px;cursor:pointer;font-size:13px}
+.szrow:hover{background:var(--hover)}
+.szrow input{width:16px;height:16px;accent-color:var(--accent);margin:0;flex:none}
+.shape{width:24px;height:24px;display:grid;place-items:center;flex:none}
+.shape i{display:block;border:1.5px solid var(--fg);border-radius:2px;background:var(--accent-soft)}
+.szrow .nm{flex:1;min-width:0}
+.szrow .px{font:11.5px var(--font-data);color:var(--muted)}
+
+.steps{display:grid;gap:10px;counter-reset:s}
+.srow{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start}
+.srow::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:var(--sw) solid var(--stroke);font:700 13px var(--font-display);background:var(--panel)}
+.srow .t{display:grid;gap:6px}
+.srow .t>b{font:600 13.5px var(--font-display)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+textarea.prompt{width:100%;min-height:96px;border:var(--sw) solid var(--line);border-radius:8px;padding:8px 10px;background:var(--hover);font:12px/1.5 var(--font-data);resize:vertical}
+.tpl{border:var(--sw) solid var(--line);border-radius:10px;padding:10px;display:grid;place-items:center}
+.tpl canvas{display:block;max-width:100%;height:auto;border:var(--sw) solid var(--stroke)}
+
+.paste{border:2px dashed var(--accent);border-radius:12px;padding:26px 16px;text-align:center;display:grid;gap:8px;justify-items:center;background:var(--accent-soft);cursor:pointer}
+.paste strong{font:600 15px var(--font-display)}
+.paste kbd{font:600 12px var(--font-data);border:var(--sw) solid var(--stroke);border-bottom-width:3px;border-radius:5px;padding:1px 6px;background:var(--panel)}
+.paste.over{filter:brightness(.96)}
+.rbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rbar .status{flex:1}
+.cards{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
+.card{border:var(--sw) solid var(--stroke);border-radius:10px;overflow:hidden;background:var(--panel);display:flex;flex-direction:column;max-width:100%}
+.card .pic{position:relative;padding:12px;display:grid;place-items:center;border-bottom:var(--sw) solid var(--stroke);background:var(--hover)}
+.card canvas{display:block;outline:var(--sw) solid var(--stroke)}
+.card.editing canvas{cursor:grab;touch-action:none;outline:2px solid var(--accent);outline-offset:2px}
+.card .pic .ratio{position:absolute;left:6px;top:6px}
+.card .cap{padding:8px 10px 2px;display:grid;gap:2px}
+.card .fn{font:600 13px var(--font-ui)}
+.card .dim{font:11.5px var(--font-data);color:var(--muted)}
+.cact{display:flex;gap:6px;align-items:center;padding:6px 10px 10px}
+.cact .sp{flex:1}
+.progress{height:8px;border-radius:99px;border:var(--sw) solid var(--stroke);background:var(--panel);overflow:hidden;width:120px}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .15s}
+.sheetview{border:var(--sw) solid var(--line);border-radius:10px;padding:10px}
+.sheetview canvas{display:block;max-width:100%;height:auto}
+.ownerbox{display:grid;gap:6px;border:2px dashed var(--alert);border-radius:10px;padding:10px;background:var(--alert-bg)}
+.auto{display:grid;gap:8px;padding-bottom:4px}
+.autobar{display:flex;align-items:center;gap:10px}.autobar:has(.status:empty):has(.progress[hidden]){display:none}
+#autoBtn{font-size:15px;padding:13px 12px}
+.mrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px}
+.mrow label{font:600 12.5px var(--font-display)}
+.mrow select{border:var(--sw) solid var(--stroke);background:var(--panel);border-radius:7px;padding:3px 6px;font-size:12.5px}
+.board{border:var(--sw) solid var(--line);border-radius:10px;overflow:hidden;background:var(--hover)}
+.board canvas{display:block;width:100%;height:auto}
+.empty-state{display:grid;gap:8px;justify-items:center;color:var(--muted);text-align:center;padding:70px 20px}
+.empty-state strong{color:var(--fg);font:600 15px var(--font-display)}
+details.more>summary{cursor:pointer;color:var(--accent);font-size:12.5px;font-weight:600}
+</style>
+</head><body>
+
+<header class="top">
+  <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><rect x="2" y="6" width="13" height="8" rx="1"/><rect x="17" y="3" width="5" height="15" rx="1" opacity=".75"/><rect x="5" y="16" width="8" height="5" rx="1" opacity=".55"/></svg></div>
+  <div><h1>Layout Guide</h1></div>
+  <p class="disclaimer">ใส่ภาพต้นแบบ กดปุ่มเดียว ได้ไกด์จัดวาง 7 ไซส์ในแผ่นเดียว · ใช้ Nano Banana (Gemini)</p>
+  <div class="quota" id="pquota" title="บัญชี Puter ที่ใช้อยู่ และเครดิตฟรีรายเดือน">
+    <div class="qacc"><small>บัญชี</small><span class="qname" id="pUser">ยังไม่ล็อกอิน</span><button class="btn ghost" id="switchAcc" type="button">ล็อกอิน</button></div>
+    <div class="qsep" aria-hidden="true"></div>
+    <div class="qcred"><div><b id="pLeft">–</b><span class="qtot" id="pTotal"></span></div><small id="pSub">เครดิตเหลือ · ต่อเดือน</small></div>
+  </div>
+</header>
+
+<main class="app">
+<div class="col">
+  <section class="panel n-blue" aria-label="ภาพต้นแบบ">
+    <div class="phead"><span class="step">01</span><h2>ภาพต้นแบบ</h2></div>
+    <div class="pbody">
+      <div class="drop" id="drop" role="button" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 8.5a4 4 0 0 1-.5 9.5"/><path d="M12 12v8M8.5 15.5 12 12l3.5 3.5"/></svg>
+        <span class="btn primary">เลือกภาพ</span>
+        <small>JPG, PNG, WebP · ลากมาวาง หรือ Ctrl+V</small>
+      </div>
+      <div class="master" id="master" hidden>
+        <img id="mImg" alt="ภาพต้นแบบ">
+        <div class="minfo"><span class="name" id="mName"></span><span class="dim" id="mDim"></span><button class="btn small" id="changeBtn" type="button">เปลี่ยน</button></div>
+      </div>
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden>
+    </div>
+  </section>
+
+  <section class="panel n-yellow" aria-label="ไซส์ที่จะได้">
+    <div class="phead"><span class="step">02</span><h2>ไซส์ที่จะได้</h2><span class="count">7 ไซส์</span></div>
+    <div class="pbody" id="sizes" style="gap:2px"></div>
+  </section>
+</div>
+
+<div class="col">
+  <section class="panel n-pink" aria-label="สร้าง">
+    <div class="phead"><span class="step">03</span><h2>สร้าง</h2></div>
+    <div class="pbody">
+      <div class="auto">
+        <button class="btn primary block" id="autoBtn" type="button" disabled>✨ Click</button>
+        <div class="autobar"><div class="progress" id="autoProg" hidden><i></i></div><span class="status" id="autoStatus" role="status"></span></div>
+        <div class="mrow"><label for="modelSel">โมเดล</label><select id="modelSel">
+          <option value="nb21-1k">Nano Banana 2.1 · 1K (แนะนำ)</option>
+          <option value="nb25">Nano Banana รุ่นแรก (2.5 Flash)</option>
+          <option value="gpt-low">GPT Image 2 · low (ประหยัด)</option>
+          <option value="flux-klein">FLUX.2 Klein (ถูกสุด)</option>
+          <option value="nb21-512">Nano Banana 2.1 · 512 (เล็กสุด)</option>
+        </select><span class="hint">ใช้เวลาประมาณ 20–60 วินาที</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel n-green" id="results" aria-label="ผลลัพธ์">
+    <div class="phead"><span class="step">04</span><h2>ผลลัพธ์</h2>
+      <button class="btn small" id="saveBtn" type="button" disabled style="margin-left:auto">เซฟภาพ</button></div>
+    <div class="pbody">
+      <span class="status" id="resStatus" role="status"></span>
+      <div class="board" id="boardWrap"><div class="empty-state" id="boardEmpty"><strong>ยังไม่มีผลลัพธ์</strong><span>ใส่ภาพต้นแบบ แล้วกด ✨ Click</span></div><canvas id="board" hidden></canvas></div>
+    </div>
+  </section>
+</div>
+</main>
+
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const mk=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const store={get(k,d){try{const v=localStorage.getItem('lg.'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('lg.'+k,JSON.stringify(v))}catch(e){}}};
+
+/* ---------- the 7 sizes and where each sits on the sheet ----------
+   Sheet is 2400×1350 (16:9). Frames keep the exact ratio of their size. */
+const SW=2400,SH=1350,FRAME='#ff00c8',STROKE=8;
+const SIZES=[
+  {id:'16x9', name:'แนวนอน 16:9',  r:'16:9', w:1920,h:1080, f:{x:850, y:150,w:800, h:450}},
+  {id:'1x1',  name:'สี่เหลี่ยม 1:1', r:'1:1',  w:1080,h:1080, f:{x:1680,y:150,w:450, h:450}},
+  {id:'9x16', name:'แนวตั้ง 9:16',  r:'9:16', w:1080,h:1920, f:{x:30,  y:660,w:371, h:660}},
+  {id:'4x3',  name:'จอ 4:3',       r:'4:3',  w:1440,h:1080, f:{x:431, y:660,w:528, h:396}},
+  {id:'2x1',  name:'แนวนอนยาว 2:1', r:'2:1',  w:1920,h:960,  f:{x:989, y:660,w:980, h:490}},
+  {id:'8x1',  name:'แถบยาว 8:1',    r:'8:1',  w:3840,h:480,  f:{x:989, y:1190,w:1120,h:140}},
+  {id:'3x16', name:'เสาสูง 3:16',   r:'3:16', w:720, h:3840, f:{x:2160,y:150,w:210, h:1120}},
+];
+const SRC_BOX={x:30,y:150,w:790,h:450};
+const sel=new Set(SIZES.map(s=>s.id));
+
+/* ---------- 01 master ---------- */
+const S={src:null,name:'',sheet:null,result:null,crops:{},cards:new Map()};
+function openPicker(){$('fileInput').click()}
+$('drop').onclick=openPicker;$('drop').onkeydown=e=>{if(e.key==='Enter'||e.key===' ')openPicker()};$('changeBtn').onclick=openPicker;
+$('fileInput').onchange=e=>{loadMaster(e.target.files[0]);e.target.value=''};
+function loadImg(f){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=()=>rej(new Error('เปิดภาพนี้ไม่ได้'));im.src=URL.createObjectURL(f)})}
+async function loadMaster(f){if(!f)return;try{const im=await loadImg(f);S.src=im;S.name=(f.name||'image').replace(/\.[^.]+$/,'')||'image';
+  $('drop').hidden=true;$('master').hidden=false;$('mImg').src=im.src;$('mName').textContent=S.name;$('mDim').textContent=im.naturalWidth+'×'+im.naturalHeight;
+  buildSheet();}catch(e){alert(e.message)}}
+
+/* ---------- 02 sizes ---------- */
+function shapeIcon(w,h){const m=18,r=w/h;let a=m,b=m/r;if(b>m){b=m;a=m*r}return `<span class="shape"><i style="width:${Math.max(3,a).toFixed(1)}px;height:${Math.max(3,b).toFixed(1)}px"></i></span>`}
+function buildSizes(){const box=$('sizes');box.innerHTML='';
+  for(const s of SIZES)box.appendChild(mk('div','szrow',`${shapeIcon(s.w,s.h)}<span class="nm">${s.name}</span><span class="px">${s.w}×${s.h}</span>`))}
+
+/* ---------- 03 sheet + prompt ---------- */
+const PROMPT=()=>`Edit this image. It is a layout sheet: the box labeled SOURCE (green border) contains an advertisement. Each magenta frame has a size label.
+Fill every magenta frame with the SAME advertisement, re-designed by a professional designer for that frame's shape.
+STRICT RULES for every frame:
+- Every logo, headline, line of text and the main person/product must be COMPLETELY inside the frame, with a clear empty margin of at least 8% of the frame size on all four sides. Nothing may touch or cross the magenta line. Make elements smaller if needed.
+- Keep the wording, spelling and font style of every text exactly the same. Drop tiny legal/fine-print text if it does not fit.
+- Extend or crop the background so it fills the frame edge to edge, no white or empty areas.
+Layout by shape:
+- 16:9, 4:3, 2:1: logo top corner, headline beside the hero, hero on the other side.
+- 1:1 and 9:16: logo top, headline upper area, hero in the middle/lower area.
+- 3:16 (very tall): stack top to bottom — logo, headline (split into short lines), hero, small text. Keep it narrow enough to fit the width.
+- 8:1 (very wide strip): one row left to right — logo, headline on one line, hero, small logo at the right. Everything vertically centred and well inside the strip height.
+Do not change anything outside the frames: keep the white sheet, the magenta frame lines, the labels and the SOURCE box exactly where they are.
+Return the full sheet at the same 16:9 size.`;
+function wrapText(x,text,maxW){const words=text.split(' '),lines=[];let cur='';for(const w of words){const t=cur?cur+' '+w:w;if(x.measureText(t).width>maxW&&cur){lines.push(cur);cur=w}else cur=t}if(cur)lines.push(cur);return lines}
+function buildSheet(){
+  const c=document.createElement('canvas');c.width=SW;c.height=SH;const x=c.getContext('2d');
+  x.fillStyle='#fff';x.fillRect(0,0,SW,SH);
+  x.fillStyle='#111';x.font='600 30px "IBM Plex Sans Thai",Arial,sans-serif';x.textBaseline='top';
+  x.fillText('LAYOUT SHEET — fill each magenta frame with the SOURCE ad re-laid-out for that shape. Keep all text identical. Keep frames & labels.',30,22);
+  x.font='500 22px "IBM Plex Mono",monospace';x.fillStyle='#666';x.fillText('Do not draw outside the frames · background must fill each frame edge to edge',30,64);
+  // source
+  x.fillStyle='#111';x.font='700 24px "IBM Plex Mono",monospace';x.fillText('SOURCE',SRC_BOX.x,SRC_BOX.y-34);
+  if(S.src){const r=Math.min(SRC_BOX.w/S.src.naturalWidth,SRC_BOX.h/S.src.naturalHeight),w=S.src.naturalWidth*r,h=S.src.naturalHeight*r,px=SRC_BOX.x+(SRC_BOX.w-w)/2,py=SRC_BOX.y+(SRC_BOX.h-h)/2;
+    x.imageSmoothingQuality='high';x.drawImage(S.src,px,py,w,h);x.lineWidth=6;x.strokeStyle='#16a34a';x.strokeRect(px-3,py-3,w+6,h+6)}
+  else{x.strokeStyle='#16a34a';x.lineWidth=6;x.setLineDash([12,10]);x.strokeRect(SRC_BOX.x,SRC_BOX.y,SRC_BOX.w,SRC_BOX.h);x.setLineDash([])}
+  // frames
+  for(const s of SIZES){if(!sel.has(s.id))continue;const f=s.f;
+    x.fillStyle='#f3f3f3';x.fillRect(f.x,f.y,f.w,f.h);
+    x.lineWidth=STROKE;x.strokeStyle=FRAME;x.strokeRect(f.x-STROKE/2,f.y-STROKE/2,f.w+STROKE,f.h+STROKE);
+    x.fillStyle='#111';x.font='700 24px "IBM Plex Mono",monospace';x.textBaseline='bottom';x.fillText(s.r,f.x,f.y-10);
+    x.fillStyle='#bbb';x.font=`700 ${Math.round(Math.min(f.w,f.h)*.3)}px Archivo,Arial,sans-serif`;x.textAlign='center';x.textBaseline='middle';x.fillText(s.r,f.x+f.w/2,f.y+f.h/2);x.textAlign='left';x.textBaseline='top'}
+  S.sheet=c;
+  $('autoBtn').disabled=!S.src;
+}
+const sheetBlob=()=>new Promise(r=>S.sheet.toBlob(r,'image/png'));
+/* what we send to the AI: smaller JPEG = fewer input tokens = fewer credits (frames stay easy to read) */
+function sheetBlobSmall(){const c=document.createElement('canvas');c.width=1024;c.height=576;const x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(S.sheet,0,0,1024,576);return new Promise(r=>c.toBlob(r,'image/jpeg',.88))}
+
+/* ---------- 04 result: paste, find frames, cut ---------- */
+async function loadResult(f,opts){
+  if(!f)return;if(!sel.size){setRes('ยังไม่ได้เลือกไซส์','bad');return}
+  try{const im=await loadImg(f);
+    // bring the result onto sheet coordinates (Gemini may return a different pixel size)
+    const c=document.createElement('canvas');c.width=SW;c.height=SH;const x=c.getContext('2d',{willReadFrequently:true});x.imageSmoothingQuality='high';x.drawImage(im,0,0,SW,SH);
+    const ar=im.naturalWidth/im.naturalHeight;
+    S.result=c;S.crops={};const found=detectFrames(x);
+    for(const s of SIZES)S.crops[s.id]=found[s.id];
+    buildBoard();
+    const miss=SIZES.filter(s=>!found[s.id].hit).length;
+    setRes(miss?`AI วาดกรอบเพี้ยน ${miss} ไซส์ ภาพในช่องนั้นอาจไม่ครบ ลองกด ✨ Click ใหม่`:'',miss?'bad':'');
+  }catch(e){setRes(e.message,'bad')}
+}
+function setRes(t,c){const s=$('resStatus');s.textContent=t;s.className='status'+(c?' '+c:'')}
+/* look for the magenta frame lines near where we drew them, so small shifts by Gemini are absorbed */
+function detectFrames(x){
+  const d=x.getImageData(0,0,SW,SH).data,mag=(i)=>{const r=d[i],g=d[i+1],b=d[i+2];return r>170&&b>120&&g<110&&r-g>90&&b-g>50};
+  const out={};
+  for(const s of SIZES){const f=s.f,sr=Math.round(Math.max(24,Math.min(f.w,f.h)*.12));
+    const colScore=(X,y0,y1)=>{let n=0;for(let y=y0;y<y1;y+=2)if(mag((y*SW+X)*4))n++;return n/((y1-y0)/2)};
+    const rowScore=(Y,x0,x1)=>{let n=0;for(let X=x0;X<x1;X+=2)if(mag((Y*SW+X)*4))n++;return n/((x1-x0)/2)};
+    const best=(fn,c0,lo,hi)=>{let bv=0,bp=c0;for(let p=lo;p<=hi;p++){const v=fn(p);if(v>bv+1e-6||(Math.abs(v-bv)<1e-6&&Math.abs(p-c0)<Math.abs(bp-c0))){bv=v;bp=p}}return{p:bp,v:bv}};
+    const y0=Math.round(f.y+f.h*.15),y1=Math.round(f.y+f.h*.85),x0=Math.round(f.x+f.w*.15),x1=Math.round(f.x+f.w*.85);
+    const cl=v=>clamp(v,0,SW-1),rl=v=>clamp(v,0,SH-1);
+    const L=best(X=>colScore(X,y0,y1),f.x-STROKE/2,cl(f.x-sr),cl(f.x+sr)),R=best(X=>colScore(X,y0,y1),f.x+f.w+STROKE/2,cl(f.x+f.w-sr),cl(f.x+f.w+sr));
+    const T=best(Y=>rowScore(Y,x0,x1),f.y-STROKE/2,rl(f.y-sr),rl(f.y+sr)),B=best(Y=>rowScore(Y,x0,x1),f.y+f.h+STROKE/2,rl(f.y+f.h-sr),rl(f.y+f.h+sr));
+    const hits=[L,R,T,B].filter(e=>e.v>.35).length;
+    let r={x:f.x,y:f.y,w:f.w,h:f.h,hit:false};
+    if(hits>=3){ // inner edge of the detected lines, then trim the anti-aliased stroke
+      // walk inward past the (possibly blurred) line until no pinkish pixels are left, then a small margin
+      const pink=i=>{const r=d[i],g=d[i+1],b=d[i+2];return r-g>45&&b-g>25};
+      const colP=(X)=>{let n=0;for(let y=y0;y<y1;y+=3)if(pink((y*SW+X)*4))n++;return n/((y1-y0)/3)},rowP=(Y)=>{let n=0;for(let X=x0;X<x1;X+=3)if(pink((Y*SW+X)*4))n++;return n/((x1-x0)/3)};
+      const walk=(p,dir,fn,lim)=>{let k=0;while(k<lim&&fn(p)>.12){p+=dir;k++}return p+dir*3};
+      const lim=Math.round(sr);
+      const il=walk(L.v>.35?L.p:f.x-STROKE/2,1,colP,lim),ir=walk(R.v>.35?R.p:f.x+f.w+STROKE/2,-1,colP,lim),it=walk(T.v>.35?T.p:f.y-STROKE/2,1,rowP,lim),ib=walk(B.v>.35?B.p:f.y+f.h+STROKE/2,-1,rowP,lim);
+      if(ir-il>f.w*.7&&ib-it>f.h*.7)r={x:il,y:it,w:ir-il,h:ib-it,hit:true}}
+    else r={x:f.x+3,y:f.y+3,w:f.w-6,h:f.h-6,hit:false};
+    out[s.id]=fitRatio(r,s.w/s.h);
+  }
+  return out;
+}
+/* crop window with the exact output ratio, centred on the detected frame */
+function fitRatio(r,ar){let w=r.w,h=w/ar;if(h>r.h){h=r.h;w=h*ar}return{x:r.x+(r.w-w)/2,y:r.y+(r.h-h)/2,w,h,hit:r.hit}}
+/* ---------- one board with all 7 sizes, nothing overlapping ----------
+   left: tall 3:16 column · right: row 16:9 + 1:1 + 9:16, row 4:3 + 2:1, full-width 8:1 strip */
+function boardLayout(){
+  const W=2400,pad=56,gap=44,lab=58,head=120;let t=320,L;
+  for(let k=0;k<12;k++){const R=W-2*pad-t-gap,h1=(R-2*gap)/(16/9+1+9/16),h2=(R-gap)/(4/3+2),h3=R/8,Hc=(lab+h1)+gap+(lab+h2)+gap+(lab+h3);
+    L={W,pad,gap,lab,head,R,h1,h2,h3,Hc,t};t=(Hc-lab)*3/16}
+  const x0=L.pad+L.t+L.gap,y1=L.head,y2=y1+L.lab+L.h1+L.gap,y3=y2+L.lab+L.h2+L.gap,box={};
+  box['3x16']={x:L.pad,y:y1+L.lab,w:L.t,h:L.Hc-L.lab};
+  let x=x0;for(const [id,ar] of [['16x9',16/9],['1x1',1],['9x16',9/16]]){box[id]={x,y:y1+L.lab,w:L.h1*ar,h:L.h1};x+=L.h1*ar+L.gap}
+  x=x0;for(const [id,ar] of [['4x3',4/3],['2x1',2]]){box[id]={x,y:y2+L.lab,w:L.h2*ar,h:L.h2};x+=L.h2*ar+L.gap}
+  box['8x1']={x:x0,y:y3+L.lab,w:L.R,h:L.h3};
+  return{W:L.W,H:Math.round(y3+L.lab+L.h3+L.pad),box,lab:L.lab,pad:L.pad}
+}
+function buildBoard(){
+  const B=boardLayout(),c=$('board');c.width=B.W;c.height=B.H;const x=c.getContext('2d');x.imageSmoothingQuality='high';
+  x.fillStyle='#f4f4f6';x.fillRect(0,0,B.W,B.H);
+  x.fillStyle='#18181f';x.textBaseline='middle';x.font='700 44px Archivo,"IBM Plex Sans Thai",sans-serif';x.fillText(S.name,B.pad,62);
+  const nw=x.measureText(S.name).width;x.font='500 26px "IBM Plex Sans Thai",sans-serif';x.fillStyle='#5f5f6e';x.fillText('Layout Guide · 7 ไซส์',B.pad+nw+24,64);
+  for(const s of SIZES){const b=B.box[s.id],r=S.crops[s.id];
+    // label: ratio chip + name + target pixels
+    x.font='600 24px "IBM Plex Mono",monospace';const cw=x.measureText(s.r).width+20,ly=b.y-B.lab/2-2;
+    x.fillStyle='#13233f';x.beginPath();x.roundRect(b.x,ly-17,cw,34,6);x.fill();x.fillStyle='#fff';x.fillText(s.r,b.x+10,ly+1);
+    x.fillStyle='#18181f';x.font='600 25px "IBM Plex Sans Thai",sans-serif';const name=s.name.replace(/\s*\d+:\d+$/,'');x.fillText(name,b.x+cw+12,ly);
+    if(b.w>300){const nw2=x.measureText(name).width;x.fillStyle='#5f5f6e';x.font='400 21px "IBM Plex Mono",monospace';x.fillText(s.w+'×'+s.h,b.x+cw+24+nw2,ly+1)}
+    x.fillStyle='#fff';x.fillRect(b.x,b.y,b.w,b.h);x.drawImage(S.result,r.x,r.y,r.w,r.h,b.x,b.y,b.w,b.h);
+    x.lineWidth=2;x.strokeStyle='#18181f';x.strokeRect(b.x-1,b.y-1,b.w+2,b.h+2)}
+  c.hidden=false;$('boardEmpty').hidden=true;$('saveBtn').disabled=false;
+}
+function saveBlob(b,name){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+$('saveBtn').onclick=()=>$('board').toBlob(b=>saveBlob(b,S.name+'_layout-7sizes.png'),'image/png');
+
+
+/* ---------- one-click: Nano Banana through Puter.js (user-pays: each user spends their own free monthly credits) ---------- */
+/* Shared account: everyone spends the site owner's free monthly credits. Leave empty to make each user sign in. */
+const SHARED_TOKEN='';
+const OWNER=location.hash==='#owner';
+let puterP=null;
+function useShared(){if(!SHARED_TOKEN||OWNER)return;try{localStorage.setItem('puter.auth.token',SHARED_TOKEN)}catch(e){};if(window.puter&&puter.setAuthToken)try{puter.setAuthToken(SHARED_TOKEN)}catch(e){}}
+function loadPuter(){if(window.puter)return Promise.resolve();if(puterP)return puterP;
+  useShared();
+  puterP=new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://js.puter.com/v2/';s.onload=()=>{useShared();res()};s.onerror=()=>{puterP=null;rej(new Error('โหลด Puter ไม่สำเร็จ'))};document.head.appendChild(s)});return puterP}
+loadPuter().then(refreshCredits).catch(()=>{}); // warm up so the sign-in popup can open straight from the click
+function autoStatus(t,cls,p){const s=$('autoStatus');s.textContent=t||'';s.className='status'+(cls?' '+cls:'');const pr=$('autoProg');pr.hidden=p==null;if(p!=null)pr.firstElementChild.style.width=Math.round(p*100)+'%'}
+function pickNum(o,keys){for(const k of keys){const v=k.split('.').reduce((a,b)=>a&&a[b],o);if(typeof v==='number')return v}return null}
+let creditInfo=null;
+function pickStr(o,keys){for(const k of keys){const v=k.split('.').reduce((a,b)=>a&&a[b],o);if(v)return v}return null}
+async function refreshAccount(){
+  const signed=window.puter&&puter.auth.isSignedIn();
+  $('switchAcc').textContent=signed?'เปลี่ยน':'ล็อกอิน';
+  if(!signed){$('pUser').textContent='ยังไม่ล็อกอิน';$('pLeft').textContent='–';$('pTotal').textContent='';return}
+  try{const u=await puter.auth.getUser();$('pUser').textContent=u.username||u.email||'บัญชี Puter';$('pUser').title=u.email||u.username||''}catch(e){}
+}
+async function refreshCredits(){
+  await refreshAccount();
+  try{if(!window.puter||!puter.auth.isSignedIn())return null;const u=await puter.auth.getMonthlyUsage();
+    const left=pickNum(u,['allowanceInfo.remaining','remaining','allowance.remaining']),total=pickNum(u,['allowanceInfo.monthUsageAllowance','monthUsageAllowance','allowance.total']);
+    if(left==null)return null;
+    // Puter reports micro-units; the dashboard shows 1,000 credits for the free allowance, so scale to that
+    const scale=total?1000/total:1;creditInfo={left:left*scale,total:(total||left)*scale,raw:u};
+    $('pLeft').textContent=Math.floor(creditInfo.left).toLocaleString();$('pTotal').textContent='/'+Math.round(creditInfo.total).toLocaleString();
+    const rs=pickStr(u,['allowanceInfo.resetDate','allowanceInfo.resetsAt','allowanceInfo.periodEnd','resetDate','resetsAt','periodEnd','nextReset']);
+    let txt='เครดิตเหลือ · ต่อเดือน';
+    if(rs){const d=new Date(typeof rs==='number'&&rs<1e12?rs*1000:rs);if(!isNaN(d))txt+=' · รีเซ็ต '+d.toLocaleDateString('th-TH',{day:'numeric',month:'short'})}
+    $('pSub').textContent=txt;
+    $('pquota').classList.toggle('low',creditInfo.left<creditInfo.total*.1);return creditInfo}
+  catch(e){return null}}
+$('switchAcc').onclick=async()=>{
+  try{await loadPuter();if(puter.auth.isSignedIn()){try{localStorage.removeItem('puter.auth.token')}catch(e){};await puter.auth.signOut()}
+    await puter.auth.signIn();await refreshCredits()}
+  catch(e){console.error(e);refreshAccount()}};
+/* model presets (so we can compare quality vs credits); each tries its own fallbacks on "unknown model" errors */
+const PRESETS={
+  'nb21-1k':  [['google/gemini-nano-banana-2.1',{aspect_ratio:'16:9',quality:'1K'}],['gemini-3.1-flash-image',{aspect_ratio:'16:9',quality:'1K'}]],
+  'nb21-512': [['google/gemini-nano-banana-2.1',{aspect_ratio:'16:9',quality:'512'}],['gemini-3.1-flash-image',{aspect_ratio:'16:9',quality:'512'}]],
+  'nb25':     [['google/gemini-2.5-flash-image',{aspect_ratio:'16:9'}],['gemini-2.5-flash-image',{aspect_ratio:'16:9'}]],
+  'gpt-low':  [['openai/gpt-image-2',{quality:'low',ratio:{w:1536,h:1024}}],['gpt-image-2',{quality:'low',ratio:{w:1536,h:1024}}]],
+  'flux-klein':[['black-forest-labs/flux-2-klein-4b',{width:1280,height:720}],['flux-2-klein-4b',{width:1280,height:720}]],
+};
+try{const m=localStorage.getItem('lg.model');if(m&&PRESETS[m])$('modelSel').value=m}catch(e){}
+$('modelSel').onchange=()=>{try{localStorage.setItem('lg.model',$('modelSel').value)}catch(e){}};
+$('autoBtn').onclick=async()=>{
+  const btn=$('autoBtn');if(!S.src||!S.sheet)return;btn.disabled=true;
+  try{
+    if(!window.puter){autoStatus('กำลังโหลด Puter…');await loadPuter()}
+    useShared();
+    if(!puter.auth.isSignedIn()){if(SHARED_TOKEN&&!OWNER)throw new Error('บัญชีส่วนกลางใช้ไม่ได้ (token หมดอายุ) แจ้งเจ้าของเว็บ');
+      autoStatus('ล็อกอินบัญชี Puter ในหน้าต่างที่เด้งขึ้นมา (ครั้งแรกครั้งเดียว)…');await puter.auth.signIn()}
+    const before=await refreshCredits();
+    const blob=await sheetBlobSmall(),t0=performance.now();
+    let img=null,lastErr=null,used='';
+    for(const [model,opt] of PRESETS[$('modelSel').value]||PRESETS['nb21-1k']){
+      autoStatus('Nano Banana กำลังจัดวาง 7 ไซส์… (ประมาณ 20–60 วินาที)',null,.1);
+      const tick=setInterval(()=>{const p=Math.min(.92,.1+(performance.now()-t0)/60000*.8);$('autoProg').firstElementChild.style.width=Math.round(p*100)+'%'},500);
+      try{img=await puter.ai.txt2img(PROMPT(),{model,input_image:blob,input_image_mime_type:'image/jpeg',...opt});used=$('modelSel').selectedOptions[0].textContent;clearInterval(tick);break}
+      catch(e){clearInterval(tick);lastErr=e;const m=String((e&&(e.message||e.error&&e.error.message))||e);
+        if(/insufficient|402|funds|credit/i.test(m))throw new Error('เครดิตฟรีเดือนนี้หมดแล้ว รอเดือนถัดไปนะคะ');
+        if(/401|unauthori|token|auth/i.test(m)&&SHARED_TOKEN)throw new Error('บัญชีส่วนกลางใช้ไม่ได้ (token หมดอายุ) แจ้งเจ้าของเว็บ');
+        if(!/model|not found|unsupported|invalid/i.test(m))throw e}}
+    if(!img)throw lastErr||new Error('ไม่ได้ภาพกลับมา');
+    autoStatus('ได้ภาพแล้ว กำลังจัดแผ่น…',null,.96);
+    let rb;try{rb=await (await fetch(img.src)).blob()}catch(e){rb=await new Promise((res,rej)=>{const im=new Image();im.crossOrigin='anonymous';im.onload=()=>{const c=document.createElement('canvas');c.width=im.naturalWidth;c.height=im.naturalHeight;c.getContext('2d').drawImage(im,0,0);c.toBlob(res,'image/png')};im.onerror=()=>rej(new Error('ดึงภาพผลลัพธ์ไม่ได้'));im.src=img.src})}
+    await loadResult(rb,{auto:true});
+    const after=await refreshCredits(),sec=((performance.now()-t0)/1000).toFixed(0);
+    const cost=before&&after?Math.max(0,before.left-after.left):null;
+    autoStatus(`เสร็จใน ${sec} วินาที`+(cost!=null?` · ใช้ไป ${cost.toFixed(1)} เครดิต · เหลือทำได้อีก ~${cost>0?Math.floor(after.left/cost):'?'} ครั้งเดือนนี้`:'')+` · ${used}`,'ok');
+    $('results').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){console.error(e);autoStatus('ไม่สำเร็จ: '+((e&&(e.message||e.error&&e.error.message))||e),'bad')}
+  finally{btn.disabled=!S.src}
+};
+
+if(OWNER){const box=mk('div','ownerbox',`<b>โหมดเจ้าของเว็บ</b><span class="hint">ล็อกอินบัญชี Puter ของคุณ แล้วคัดลอก token ส่งให้ผู้พัฒนาใส่ในเว็บ · อย่ากดล็อกเอาต์ Puter ในเบราว์เซอร์นี้หลังคัดลอก</span><div class="btnrow"><button class="btn primary" type="button" id="ownerCopy">ล็อกอิน + คัดลอก token</button><span class="status" id="ownerStatus"></span></div>`);
+  document.querySelector('.auto').before(box);
+  $('ownerCopy').onclick=async()=>{const st=$('ownerStatus');try{await loadPuter();if(!puter.auth.isSignedIn())await puter.auth.signIn();
+    const t=puter.authToken||localStorage.getItem('puter.auth.token');if(!t)throw new Error('ไม่พบ token');
+    await navigator.clipboard.writeText(t);st.className='status ok';st.textContent='คัดลอกแล้ว ('+t.length+' ตัวอักษร) — วางส่งให้ผู้พัฒนาได้เลย';refreshCredits()}
+    catch(e){st.className='status bad';st.textContent='ไม่สำเร็จ: '+(e.message||e)}}}
+
+/* ---------- master input: paste / drop ---------- */
+document.addEventListener('paste',e=>{const it=[...((e.clipboardData||{}).items||[])].find(i=>i.type.startsWith('image/'));if(!it)return;e.preventDefault();loadMaster(it.getAsFile())});
+['dragenter','dragover'].forEach(t=>document.addEventListener(t,e=>{e.preventDefault();$('drop').classList.add('over')}));
+['dragleave','drop'].forEach(t=>document.addEventListener(t,e=>{e.preventDefault();if(t==='drop'||e.target===document.documentElement)$('drop').classList.remove('over')}));
+document.addEventListener('drop',e=>{const f=e.dataTransfer&&e.dataTransfer.files[0];if(f)loadMaster(f)});
+buildSizes();buildSheet();
+})();
+</script>
+</body></html>

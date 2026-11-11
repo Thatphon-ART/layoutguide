@@ -1,4 +1,4 @@
-# Layout Guide
+# Resize Studio
 
 ใส่ภาพต้นแบบ กด **✨ Click** ได้ไกด์จัดวาง 7 ไซส์รวมในภาพเดียว ด้วย Nano Banana (Gemini) ผ่าน Puter.js
 
